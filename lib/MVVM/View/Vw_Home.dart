@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:untitled/MVVM/ViewModel/Vm_Home.dart';
 
 import '../Mode/ModCategories.dart';
 import '../Mode/ModDiet.dart';
@@ -14,29 +15,15 @@ class Vw_Home extends StatefulWidget {
 }
 
 class _Vw_HomeState extends State<Vw_Home> {
-  List<CategoryModel>? l_ListCategoryModel = [];
-  List<DietModel>? l_DietModel = [];
-  List<PopularDietsModel> l_PopularDiets = [];
-
-  void getdata() {
-    l_ListCategoryModel = CategoryModel.getCategories();
-  }
-
-  void getdiets() {
-    l_DietModel = DietModel.getDiets();
-  }
-
-  void getPopulerdiets() {
-    l_PopularDiets = PopularDietsModel.getPopularDiets();
-  }
+  VM_Home l_VM_Home = new VM_Home();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getdata();
-    getdiets();
-    getPopulerdiets();
+    l_VM_Home.getdata();
+    l_VM_Home.getdiets();
+    l_VM_Home.getPopulerdiets();
   }
 
   @override
@@ -138,7 +125,7 @@ class _Vw_HomeState extends State<Vw_Home> {
           Container(
             height: 150,
             child: ListView.separated(
-              itemCount: l_ListCategoryModel!.length,
+              itemCount: l_VM_Home.l_ListCategoryModel!.length,
               scrollDirection: Axis.horizontal,
               padding: EdgeInsets.only(left: 20, right: 20),
               separatorBuilder: (context, index) => SizedBox(
@@ -148,7 +135,7 @@ class _Vw_HomeState extends State<Vw_Home> {
                 return Container(
                   width: 100,
                   decoration: BoxDecoration(
-                    color: l_ListCategoryModel![index].boxColor.withOpacity(0.3),
+                    color: l_VM_Home.l_ListCategoryModel![index].boxColor.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Column(
@@ -158,10 +145,10 @@ class _Vw_HomeState extends State<Vw_Home> {
                         height: 50,
                         width: 50,
                         decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                        child: SvgPicture.asset(l_ListCategoryModel![index].iconPath),
+                        child: SvgPicture.asset(l_VM_Home.l_ListCategoryModel![index].iconPath),
                       ),
                       Text(
-                        l_ListCategoryModel![index].name,
+                        l_VM_Home.l_ListCategoryModel![index].name,
                         style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
                       )
                     ],
@@ -189,7 +176,7 @@ class _Vw_HomeState extends State<Vw_Home> {
               Container(
                 height: 240,
                 child: ListView.separated(
-                  itemCount: l_DietModel!.length,
+                  itemCount: l_VM_Home.l_DietModel!.length,
                   scrollDirection: Axis.horizontal,
                   padding: EdgeInsets.only(left: 20, right: 20),
                   separatorBuilder: (context, index) => SizedBox(
@@ -199,23 +186,23 @@ class _Vw_HomeState extends State<Vw_Home> {
                     return Container(
                       width: 210,
                       decoration: BoxDecoration(
-                        color: l_DietModel![index].boxColor.withOpacity(0.3),
+                        color: l_VM_Home.l_DietModel![index].boxColor.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset(l_DietModel![index].iconPath),
+                          SvgPicture.asset(l_VM_Home.l_DietModel![index].iconPath),
                           Text(
-                            l_DietModel![index].name,
+                            l_VM_Home.l_DietModel![index].name,
                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
                           ),
                           Text(
-                            l_DietModel![index].level +
+                            l_VM_Home.l_DietModel![index].level +
                                 '|' +
-                                l_DietModel![index].duration +
+                                l_VM_Home.l_DietModel![index].duration +
                                 '|' +
-                                l_DietModel![index].calorie,
+                                l_VM_Home.l_DietModel![index].calorie,
                             style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400, color: Colors.grey),
                           ),
                           SizedBox(
@@ -261,7 +248,7 @@ class _Vw_HomeState extends State<Vw_Home> {
                 height: 15,
               ),
               ListView.separated(
-                itemCount: l_PopularDiets.length,
+                itemCount: l_VM_Home.l_PopularDiets.length,
                 shrinkWrap: true,
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 25,
@@ -274,7 +261,7 @@ class _Vw_HomeState extends State<Vw_Home> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         SvgPicture.asset(
-                          l_PopularDiets[index].iconPath,
+                          l_VM_Home.l_PopularDiets[index].iconPath,
                           width: 65,
                           height: 65,
                         ),
@@ -283,15 +270,15 @@ class _Vw_HomeState extends State<Vw_Home> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              l_PopularDiets[index].name,
+                              l_VM_Home.l_PopularDiets[index].name,
                               style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.black, fontSize: 16),
                             ),
                             Text(
-                              l_PopularDiets[index].level +
+                              l_VM_Home.l_PopularDiets[index].level +
                                   ' | ' +
-                                  l_PopularDiets[index].duration +
+                                  l_VM_Home.l_PopularDiets[index].duration +
                                   ' | ' +
-                                  l_PopularDiets[index].calorie,
+                                  l_VM_Home.l_PopularDiets[index].calorie,
                               style:
                                   const TextStyle(color: Color(0xff7B6F72), fontSize: 13, fontWeight: FontWeight.w400),
                             ),
@@ -307,16 +294,13 @@ class _Vw_HomeState extends State<Vw_Home> {
                         )
                       ],
                     ),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                              color: const Color(0xff1D1617).withOpacity(0.07),
-                              offset: const Offset(0, 10),
-                              blurRadius: 40,
-                              spreadRadius: 0)
-                        ]),
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: [
+                      BoxShadow(
+                          color: const Color(0xff1D1617).withOpacity(0.07),
+                          offset: const Offset(0, 10),
+                          blurRadius: 40,
+                          spreadRadius: 0)
+                    ]),
                   );
                 },
               )
